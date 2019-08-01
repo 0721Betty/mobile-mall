@@ -1,5 +1,5 @@
 {
-  "name": "webpack-3",
+  "name": "mobile-mall",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,8 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.4.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.4",
     "mint-ui": "^2.2.13",
     "vue": "^2.6.10",
     "vue-resource": "^1.5.1",
