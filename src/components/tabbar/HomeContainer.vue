@@ -16,40 +16,40 @@
     <!-- 六宫格区域 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/newslist">
           <span class="mui-icon mui-icon-chat"></span>
           <div class="mui-media-body">新闻资讯</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/sharepic">
           <span class="mui-icon mui-icon-image"></span>
           <div class="mui-media-body">图片分享</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/shopping">
           <span class="mui-icon mui-icon-extra mui-icon-extra-gift"></span>
           <div class="mui-media-body">商品购买</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/leavemsg">
           <span class="mui-icon mui-icon-email"></span>
           <div class="mui-media-body">留言反馈</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/movie">
           <span class="mui-icon mui-icon-videocam"></span>
           <div class="mui-media-body">视频专区</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/aboutUs">
           <span class="mui-icon mui-icon-phone"></span>
           <div class="mui-media-body">联系我们</div>
-        </a>
+        </router-link>
       </li>
     </ul>
   </div>
@@ -69,7 +69,7 @@ export default {
     // getLunbotu(){
     //     // 获取轮播图数据(图片和url)的方法,使用vue-resource的this.$http.get获取数据
     //     // 获取到的数据保存到data身上，使用v-for循环渲染每个item项
-    //     this.$http.get("http://xxx/api/getlunbo").then(result => {
+    //     this.$http.get("api/xxx").then(result => {
     //         // console.log(result.body);
     //         if(result.body.status === 0){
     //             // 获取成功
@@ -112,14 +112,14 @@ export default {
 //  六宫格样式
 // 去除默认的ul背景和li的边框
 .mui-grid-view.mui-grid-9 {
-    background-color: #fff;
-    border: none;
+  background-color: #fff;
+  border: none;
 
-    .mui-media-body {
-        font-size: 13px
-    }
+  .mui-media-body {
+    font-size: 13px;
+  }
 }
 .mui-grid-view.mui-grid-9 .mui-table-view-cell {
-    border: none;
+  border: none;
 }
 </style>

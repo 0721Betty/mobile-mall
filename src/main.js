@@ -4,9 +4,20 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+// 导入格式化时间的插件
+import moment from 'moment'
+// 定义全局的过滤器
+Vue.filter('dateFormat',function(dataStr,pattern = "YYYY-MM-DD HH:mm:ss"){
+    return moment(dataStr).format(pattern)
+})
+
+
+
 // 2.1导入vue-resource并且安装
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
+// 设置请求的根路径
+// Vue.http.options.root = 'http://xxxx'
 
 
 
@@ -16,10 +27,11 @@ import './lib/mui/css/mui.min.css'
 import './lib/mui/css/icons-extra.css'
 
 // 按需导入Mint-UI中的组件
-import { Header,Swipe, SwipeItem  } from 'mint-ui'
+import { Header,Swipe, SwipeItem ,Button  } from 'mint-ui'
 Vue.component(Header.name, Header)
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
+Vue.component(Button.name, Button)
 import 'mint-ui/lib/style.css'
 
 
