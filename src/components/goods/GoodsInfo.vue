@@ -71,6 +71,8 @@ import numbox from '../subcomponents/GoodsNumBox.vue'
 export default {
   data() {
     return {
+      // id: this.$route.params.id, //将路由参数中的id挂载到data，方便以后调用
+      // goodsinfo: {},//获取到商品的信息
       ballFlag: false,//控制小球隐藏和显示的标识符
       selectedCount: 1,//保存用户选择的数量（默认为1）
     };
@@ -90,6 +92,12 @@ export default {
     addToShopCar() {
       // 添加到购物车
       this.ballFlag = !this.ballFlag;
+      // [商品的id，count数量,price商品的单价，selected商品是否被选中]
+      // 拼接出一个要保存到store中car数组里的商品信息对象
+      // var goodsinfo = { id: this.id,count: this.selectedCount,price:this.goodsinfo.sell_price,selected: true}
+      var goodsinfo = { count: this.selectedCount,selected: true};
+      // 调用store中的mutations，将商品加入购物车
+      this.$store.commit('addToCar',goodsinfo);
     },
     beforeEnter(el){
         el.style.transform = "translate(0,0)";
@@ -111,7 +119,7 @@ export default {
         const yDis = badgePosition.top - ballPosition.top;
 
         el.style.transform = `translate(${xDis}px,${yDis}px)`;
-        el.style.transition = "all 1s cubic-bezier(.4,-0.3,1,.68)";
+        el.style.transition = "all 0.5s cubic-bezier(.4,-0.3,1,.68)";
         done();
     },
     afterEnter(el){
