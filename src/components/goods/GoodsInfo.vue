@@ -5,7 +5,7 @@
         @before-enter="beforeEnter"
         @enter="enter"
         @after-enter="afterEnter">
-      <div class="ball" v-show="ballFlag"></div>
+      <div class="ball" v-show="ballFlag" ref="ball"></div>
     </transition>
     <!--商品轮播图区域  -->
     <div class="mui-card">
@@ -36,13 +36,11 @@
             </span>
           </p>
           <div class="goods-count">
-            购买数量：
-            <div class="mui-numbox" data-numbox-min="1" data-numbox-max="9">
-              <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-              <input id="test" class="mui-input-numbox" type="number" value="5" />
-              <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
-            </div>
+            购买数量：&nbsp;<numbox @getCount="getSelectedCount"></numbox>
           </div>
+          <!-- 实现点击加入购物车的时候，拿到用户选择的数量 -->
+          <!-- 加入购物车按钮属于当前组件，但是数量属于GoodsNumBox.vue子组件，涉及到子组件向父组件传值（事件调用机制） -->
+          <!-- 事件调用的本质：父向子传递方法，子调用这个方法，同时把数据当作参数传递给这个方法 -->
           <p>
             <mt-button type="primary" size="small">立即购买</mt-button>
             <mt-button type="danger" size="small" @click="addToShopCar">加入购物车</mt-button>
@@ -69,11 +67,16 @@
   </div>
 </template>
 <script>
+import numbox from '../subcomponents/GoodsNumBox.vue'
 export default {
   data() {
     return {
-      ballFlag: false //控制小球隐藏和显示的标识符
+      ballFlag: false,//控制小球隐藏和显示的标识符
+      selectedCount: 1,//保存用户选择的数量（默认为1）
     };
+  },
+  components: {
+    numbox
   },
   methods: {
     toImgTextInfo() {
@@ -93,12 +96,31 @@ export default {
     },
     enter(el,done){
         el.offsetWidth;
-        el.style.transform = "translate(91px,404px)";
+        // 1.小球动画优化思路，只要分辨率和测试的时候不一样，或者滚动条有
+        // 一定的滚定的时候，问题就出现了，2.所以小球最终移动到的位置（translate(x,y)）不能写死
+        // 3.应该动态计算最终的位置
+        // 4.先得到徽标的横纵坐标，再得到小球的横纵坐标，然后让y值求差，x值也求差，得到的结果就是小球横纵坐标要位移的距离
+        // 5.dom.getBoundingClientRect().top/right/left/bottom获取距离四周的距离
+
+        // 获取小球在页面中的位置
+        const ballPosition = this.$refs.ball.getBoundingClientRect();
+        //获取徽标在页面中的位置,在子组件中可以通过操作DOM获取到父组件中的任一个元素，只要不涉及数据
+        const badgePosition = document.getElementById("badge").getBoundingClientRect();  
+        
+        const xDis = badgePosition.left - ballPosition.left;
+        const yDis = badgePosition.top - ballPosition.top;
+
+        el.style.transform = `translate(${xDis}px,${yDis}px)`;
         el.style.transition = "all 1s cubic-bezier(.4,-0.3,1,.68)";
         done();
     },
     afterEnter(el){
         this.ballFlag = !this.ballFlag;
+    },
+    getSelectedCount(count){
+      // 获取用户选择的数量
+      this.selectedCount = count; //当子组件把用户选择的数量传递给父组件时，将该数量保存到data上
+      // console.log(this.selectedCount+"----");
     }
   }
 };
@@ -144,9 +166,7 @@ export default {
   }
   .goods-count {
     margin-bottom: 8px;
-    .mui-numbox {
-      height: 30px;
-    }
+    display: flex;
   }
   .mui-card-footer {
     display: flex;
